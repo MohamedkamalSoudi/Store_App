@@ -1,4 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
+import 'package:store_app/models/product_model.dart';
+import 'package:store_app/services/update_product.dart';
 import 'package:store_app/widgets/custom_button.dart';
 
 import '../widgets/custom_text_field.dart';
@@ -6,10 +10,12 @@ import '../widgets/custom_text_field.dart';
 class UpdateProductPage extends StatelessWidget {
   UpdateProductPage({super.key});
   static String id = 'update product';
-  int? price;
+  String? price;
   String? productName, desc, image;
   @override
   Widget build(BuildContext context) {
+    ProductModel product =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -31,8 +37,8 @@ class UpdateProductPage extends StatelessWidget {
               ),
               CustomTextField(
                 onChanged: (data) {
-                    productName = data;
-                  },
+                  productName = data;
+                },
                 hintText: 'Product Name',
               ),
               SizedBox(
@@ -40,8 +46,8 @@ class UpdateProductPage extends StatelessWidget {
               ),
               CustomTextField(
                 onChanged: (data) {
-                    desc = data;
-                  },
+                  desc = data;
+                },
                 hintText: 'description',
               ),
               SizedBox(
@@ -49,8 +55,8 @@ class UpdateProductPage extends StatelessWidget {
               ),
               CustomTextField(
                 onChanged: (data) {
-                    price =int.parse(data) ;
-                  },
+                  price = data;
+                },
                 hintText: 'price',
                 inputType: TextInputType.number,
               ),
@@ -59,14 +65,24 @@ class UpdateProductPage extends StatelessWidget {
               ),
               CustomTextField(
                 onChanged: (data) {
-                    image = data;
-                  },
+                  image = data;
+                },
                 hintText: 'image',
               ),
               SizedBox(
                 height: 70,
               ),
-              CustomButon(text: 'Update'),
+              CustomButon(
+                text: 'Update',
+                onTap: () {
+                  UpdateProductService().updateProduct(
+                      title: productName!,
+                      price: price!,
+                      desc: desc!,
+                      image: image!,
+                      category: product.category);
+                },
+              ),
             ],
           ),
         ),
