@@ -1,17 +1,18 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/screens/update_product_page.dart';
-
 class CustomCard extends StatelessWidget {
-  CustomCard({required this.prouduct, super.key});
-  ProductModel prouduct;
+  CustomCard({
+    required this.product,
+    Key? key,
+  }) : super(key: key);
+
+  ProductModel product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, UpdateProductPage.id,arguments: prouduct);
+        Navigator.pushNamed(context, UpdateProductPage.id ,arguments: product);
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -20,12 +21,15 @@ class CustomCard extends StatelessWidget {
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
                 blurRadius: 50,
-                color: Colors.grey.withOpacity(.2),
-                spreadRadius: 0,
+                color: Colors.grey.withOpacity(.1),
+                spreadRadius: 20,
                 offset: Offset(10, 10),
               ),
             ]),
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               elevation: 10,
               child: Padding(
                 padding:
@@ -35,7 +39,7 @@ class CustomCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      prouduct.title.substring(0, 10),
+                      product.title.substring(0, 6),
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 16,
@@ -48,9 +52,7 @@ class CustomCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          r'$'
-                          '${prouduct.price.toString()}',
-                          // ignore: prefer_const_constructors
+                          r'$' '${product.price.toString()}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
@@ -60,20 +62,21 @@ class CustomCard extends StatelessWidget {
                           color: Colors.red,
                         ),
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
             ),
           ),
           Positioned(
-              right: 25,
-              bottom: 75,
-              child: Image.network(
-                prouduct.image,
-                height: 100,
-                width: 100,
-              )),
+            right: 32,
+            top: -60,
+            child: Image.network(
+              product.image,
+              height: 100,
+              width: 100,
+            ),
+          )
         ],
       ),
     );

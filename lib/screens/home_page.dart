@@ -1,14 +1,13 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/services/get_all_product_service.dart';
 import 'package:store_app/widgets/custom_card.dart';
 
+
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-  static String id = "home-page";
+  const HomePage({Key? key}) : super(key: key);
+  static String id = 'HomePAge';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +23,22 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text('New Trend'),
+        title: Text(
+          'New Trend',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 110),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 65),
         child: FutureBuilder<List<ProductModel>>(
-          future: AllproductService().getAllProducts(),
+          future: AllProductsService().getAllProducts(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<ProductModel> product = snapshot.data!;
+              List<ProductModel> products = snapshot.data!;
               return GridView.builder(
-                itemCount: product.length,
+                  itemCount: products.length,
                   clipBehavior: Clip.none,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -43,12 +47,12 @@ class HomePage extends StatelessWidget {
                     mainAxisSpacing: 100,
                   ),
                   itemBuilder: (context, index) {
-                    return CustomCard(
-                      prouduct: product[index],
-                    );
+                    return CustomCard(product: products[index]);
                   });
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
           },
         ),
